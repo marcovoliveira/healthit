@@ -17,4 +17,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
+/*Paginas inicias helpdesk e medico*/
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/help/home', 'HelpController@index')->name('help');
+
+
+/*Registar Medico*/
+Route::get('/help/register', 'HelpController@register');
+Route::post('/help/home/register', 'HelpController@store');
+
+/*Registar consulta*/
+Route::get('/help/appointment/register', 'AppointmentController@create');
+Route::post('/help/home/appointment', 'AppointmentController@store');

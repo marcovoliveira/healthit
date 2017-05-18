@@ -60,14 +60,13 @@
 
                             <div class="col-md-6">
                                         <select multiple class="form-control" id="especialidade" name="especialidade[]">
-                                            <option>Pediatric</option>
-                                            <option>Dermatology</option>
-                                            <option>Cardiology</option>
-                                            <option>Infectology</option>
+                                           @foreach ($proficiencies as $Proficiency)
+                                            <option value="{{$Proficiency->id}}"> {{ $Proficiency->name }} </option>
+                                        @endforeach
                                         </select>   
                                 @if ($errors->has('especialidade'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('especialidade') }}</strong>
+                                        <strong>{{ $errors->first('Proficiency') }}</strong>
                                     </span>
                                 @endif
                             </div>

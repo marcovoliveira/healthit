@@ -43,10 +43,9 @@
                             <label for="especialidade" class="col-md-4 control-label">Proficiency</label>
                             <div class="col-md-6">
                                         <select class="form-control" id="especialidade" name="especialidade">
-                                            <option>Pediatric</option>
-                                            <option>Dermatology</option>
-                                            <option>Cardiology</option>
-                                            <option>Infectology</option>
+                                        @foreach ($proficiencies as $Proficiency)
+                                            <option value="{{$Proficiency->id}}"> {{ $Proficiency->name }} </option>
+                                        @endforeach
                                         </select>   
                                 @if ($errors->has('especialidade'))
                                     <span class="help-block">
@@ -72,18 +71,21 @@
                         <!-- user_id-->
                         <div class="form-group{{ $errors->has('user_id') ? ' has-error' : '' }}">
                             <label for="user_id" class="col-md-4 control-label">Doctor</label>
-                            <div class="col-md-6">
-                                   
-                                        <select class="form-control" id="user_id" name="user_id">
+                            <div class="col-md-6">             
+                                    <select class="form-control" id="user_id" name="user_id" place>
                                          @foreach ($users as $user)
                                             @if ($user->hasRole('Doctor'))
-                                            <option value="{{$user->id}}"> {{$user->name}}</option>                                        
-                                            @else
-                                            <option value="" disabled selected>No Doctor Avaiable</option> 
-                                            @endif
+                                                @php $doctors[] = $user; @endphp                              
+                                            @endif                        
                                         @endforeach
+                                    @if (empty($doctors))                                
+                                            <option value="" disabled selected>No Doctor Avaiable</option>
+                                    @else
+                                        @foreach ($doctors as $user)
+                                                <option value="{{$user->id}}"> {{$user->name}}</option>
+                                        @endforeach        
+                                    @endif  
                                         </select>   
-                                   
                                 @if ($errors->has('Doctor'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('Doctor') }}</strong>

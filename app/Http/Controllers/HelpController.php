@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\role;
+use App\Proficiency;
 use Closure;
 use Auth;
 
@@ -26,7 +27,9 @@ class HelpController extends Controller
        return view('help.home');
    }
    public function register(){
-       return view('help.register');
+
+       $proficiencies = Proficiency::all();
+       return view('help.register', compact('proficiencies'));
    }
 
    public function store(Request $request){
@@ -44,13 +47,20 @@ class HelpController extends Controller
             'name' => request('name'),
             'seg_social' => request ('seg_social'),
             'email' => request ('email'),
-            'especialidade' => request ('especialidade'),
             'password' => bcrypt(request('password')),
             'hora_in' => request ('hora_in'),
             'hora_out' => request ('hora_out')
         ]);
 
         $user->role()->attach(Role::where('name', 'Doctor')->first());
+
+        $prof = request ('especialidade');
+        
+        foreach ($prof as  $value) {
+ 
+             $user->proficiency()->attach(Proficiency::where('id', $value)->first());
+        }
+    
 
         session()->flash('message', 'Doctor entry created successfully!');
 

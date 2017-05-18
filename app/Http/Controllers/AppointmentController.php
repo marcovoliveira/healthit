@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use App\User;
+use App\role;
+use App\Proficiency;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -32,8 +34,11 @@ class AppointmentController extends Controller
      */
     public function create()
     {
+        
         $users = User::all();
-        return view ('help.appointment.register', compact('users'));
+        $proficiencies = Proficiency::all();
+
+        return view ('help.appointment.register', compact('users', 'proficiencies'));
     }
 
     /**

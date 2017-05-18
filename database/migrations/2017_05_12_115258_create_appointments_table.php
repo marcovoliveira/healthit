@@ -21,8 +21,8 @@ class CreateAppointmentsTable extends Migration
             $table->dateTime('data');
             $table->string('especialidade');
             $table->integer('user_id');
-            $table->text('sintomas');
-            $table->text('diagnostico');
+            $table->text('sintomas')->nullable();
+            $table->text('diagnostico')->nullable();
             $table->timestamps();
         });
     }

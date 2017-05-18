@@ -10,11 +10,17 @@ class User extends Authenticatable
     use Notifiable;
 
     public function role(){
-        return $this->belongsToMany(role::class, 'role_users');
+        return $this->belongsToMany(role::class, 'role_users', 'user_id', 'role_id');
     }
+
     public function appointment(){
-        return $this->belongsToMany('App\Appointment', 'user_id');
+        return $this->hasMany('App\Appointment', 'user_id');
     }
+
+    public function proficiency(){
+        return $this->belongsToMany('App\Proficiency', 'proficiency_user', 'user_id', 'proficiency_id');
+    }
+
     public function hasAnyRole($roles){
         if (is_array($roles)) {
             foreach ($roles as $role){
@@ -37,9 +43,11 @@ class User extends Authenticatable
     return false;
     }
 
-    protected $casts = [
+
+
+    /*protected $casts = [
         'especialidade' => 'array'
-    ];
+    ];*/
     /**
      * The attributes that are mass assignable.
      *

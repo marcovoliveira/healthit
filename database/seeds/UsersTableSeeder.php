@@ -28,19 +28,6 @@ class UsersTableSeeder extends Seeder
              'name' => 'Helpdesk',
         ]);
 
-        DB::table('proficiencies')->insert([
-             'name' => 'Pediatric',
-        ]);
-        DB::table('proficiencies')->insert([
-             'name' => 'Dermatology',
-        ]);
-        DB::table('proficiencies')->insert([
-             'name' => 'Cardiology',
-        ]);
-         DB::table('proficiencies')->insert([
-             'name' => 'Infectology',
-        ]);
-
     for ($i=0; $i < 10; $i++) { 
        $user =  User::create([
             'name' => $faker->name,
@@ -52,21 +39,20 @@ class UsersTableSeeder extends Seeder
             ]);   
             $user->role()->attach(Role::where('name', 'Doctor')->first());
             
-
             $vala = rand(1, 4);
             for ($c=0; $c < 1 ; $c++) { 
             
             if ($vala === 1) {
-            $user->proficiency()->attach(Proficiency::where('name', 'Dermatology')->first());
+            $user->proficiencies()->attach(Proficiency::where('name', 'Dermatology')->first());
             }
             if ($vala === 2) {
-            $user->proficiency()->attach(Proficiency::where('name', 'Pediatric')->first());
+            $user->proficiencibes()->attach(Proficiency::where('name', 'Pediatric')->first());
             }
             if ($vala === 3) {
-            $user->proficiency()->attach(Proficiency::where('name', 'Cardiology')->first());
+            $user->proficiencies()->attach(Proficiency::where('name', 'Cardiology')->first());
             }
             if ($vala === 4) {
-            $user->proficiency()->attach(Proficiency::where('name', 'Infectology')->first());
+            $user->proficiencies()->attach(Proficiency::where('name', 'Infectology')->first());
             }
            } 
             

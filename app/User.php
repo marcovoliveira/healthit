@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Support\FilterPaginateOrder;
+
 
 class User extends Authenticatable
 {
     use Notifiable;
+    //use FilterPaginateOrder;
 
     public function role(){
         return $this->belongsToMany(role::class, 'role_users', 'user_id', 'role_id');
@@ -17,8 +20,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Appointment', 'user_id');
     }
 
-    public function proficiency(){
-        return $this->belongsToMany('App\Proficiency', 'proficiency_user', 'user_id', 'proficiency_id');
+    public function proficiencies(){
+        return $this->belongsToMany('App\Proficiency'); //, 'proficiency_user', 'user_id', 'proficiency_id');
     }
 
     public function hasAnyRole($roles){
@@ -54,15 +57,26 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'especialidade', 'seg_social', 'hora_in', 'hora_out',
+        'name', 'email', 'password', 'especialidade', 'seg_social', 'hora_in', 'hora_out'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    protected $filter = [
+        'id', 'name', 'email', 'especialidade', 'seg_social', 'hora_in', 'hora_out'
+    ];
+
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function initialize()
+    {
+        return [
+            'name' => '', 'email' => '', 'especialidade' => '', 'seg_social' => '', 'hora_in' => '', 'hora_out' => ''
+        ];
+    }
+
+
+
+
+
 }

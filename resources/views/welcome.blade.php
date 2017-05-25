@@ -73,7 +73,7 @@
                             @if ($role->name == 'Helpdesk')                           
                                 <a href="{{ url('/help/home') }}">Home Helpdesk</a>
                             @else                       
-                                <a href="{{ url('/home') }}">Home Doctor</a>
+                                <a href="{{ url('/medic/home') }}">Home Doctor</a>
                             @endif
                         @endforeach
                     @else
@@ -86,6 +86,7 @@
             <div class="content">
                 <div class="title m-b-md">
                     HealthIT
+                </div>
                 </div>
             </div>
         </div>

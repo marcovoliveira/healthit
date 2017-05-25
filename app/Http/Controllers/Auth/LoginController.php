@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -45,7 +45,7 @@ class LoginController extends Controller
 
         foreach ($this->guard()->user()->role as $role) {
             if ($role->name == 'Doctor') {
-                return redirect('/home');
+                return redirect('/medic/home');
             }
              elseif ($role->name == 'Helpdesk') {
                 return redirect('/help/home');

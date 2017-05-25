@@ -1,3 +1,14 @@
+{{-- @if (Auth::check())
+                        @foreach (Auth::user()->role as $role )
+                            @if ($role->name == 'Helpdesk')                           
+                                <a href="{{ url('/help/home') }}" button type="button" class="btn btn-primary btn-sm" >
+                                Home Helpdesk</button></a>
+                            @else                       
+                                <a href="{{ url('/medic/home') }}">Home Doctor</a>
+                            @endif
+                        @endforeach
+                        @endif --}}
+
 @extends('layouts.app')
 
 @section('content')
@@ -5,7 +16,10 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register Doctor</div>
+                <div class="panel-heading">Register Doctor<br>                 
+                     <a href="{{ url('/help/home') }}" button type="button" class="btn btn-primary btn-sm" >
+                     Home Helpdesk</button></a>
+                </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="/help/home/register">
                         {{ csrf_field() }}
@@ -53,18 +67,18 @@
                             </div>
                         </div>
                         
-                        <!-- Especialidade-->
-                        <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }}">
-                            <label for="especialidade" class="col-md-4 control-label">Proficiency</label>
+                        <!-- proficiency-->
+                        <div class="form-group{{ $errors->has('proficiency') ? ' has-error' : '' }}">
+                            <label for="proficiency" class="col-md-4 control-label">Proficiency</label>
 
 
                             <div class="col-md-6">
-                                        <select multiple class="form-control" id="especialidade" name="especialidade[]">
+                                        <select multiple class="form-control" id="proficiency" name="proficiency[]">
                                            @foreach ($proficiencies as $Proficiency)
                                             <option value="{{$Proficiency->id}}"> {{ $Proficiency->name }} </option>
                                         @endforeach
                                         </select>   
-                                @if ($errors->has('especialidade'))
+                                @if ($errors->has('proficiency'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('Proficiency') }}</strong>
                                     </span>

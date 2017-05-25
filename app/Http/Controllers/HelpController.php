@@ -26,6 +26,8 @@ class HelpController extends Controller
    public function index(){
        return view('help.home');
    }
+
+
    public function register(){
 
        $proficiencies = Proficiency::all();
@@ -38,9 +40,11 @@ class HelpController extends Controller
             'name' => 'required|string|max:255',
             'seg_social' => 'required|integer|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'especialidade' => 'required',
+            'proficiency' => 'required',
             'password' => 'required|string|min:6|confirmed',
         ]);
+
+        
 
         $user = User::create([
             
@@ -51,6 +55,62 @@ class HelpController extends Controller
             'hora_in' => request ('hora_in'),
             'hora_out' => request ('hora_out')
         ]);
+        
+
+        $user->role()->attach(Role::where('name', 'Doctor')->first());
+        $prof = request ('proficiency');
+
+        foreach ($prof as  $value) {
+             $user->proficiencies()->attach(Proficiency::where('id', $value)->first());
+        }
+        session()->flash('message', 'Doctor entry created successfully!');
+
+        return redirect('/help/home');
+   }
+
+   public function show($id)
+   {
+       $user = User::findOrFail($id);
+
+       return response()
+            ->json([
+
+                'model' => $user
+
+            ]);
+   }
+
+   public function edit($id)
+   {
+       $user = User::findOrFail($id);
+
+       return response()
+            ->json([
+                'form' => $user,
+                'option' => []
+            ]);      
+   }
+
+   public function update(Request $request, $id)
+   {
+
+
+        $this->validate(request(),  [
+            'name' => 'required|string|max:255',
+            'seg_social' => 'required|integer|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'especialidade' => 'required',
+
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+        
+
+
+        $user = User::findOrFail($id);
+        
+
+
+        $user->update($request->all());
 
         $user->role()->attach(Role::where('name', 'Doctor')->first());
 
@@ -62,9 +122,12 @@ class HelpController extends Controller
         }
     
 
-        session()->flash('message', 'Doctor entry created successfully!');
+        session()->flash('message', 'Doctor updated successfully!');
 
         return redirect('/help/home');
+
+
    }
+
 
 }

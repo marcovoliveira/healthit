@@ -8,6 +8,45 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    &-column {
+        flex: 4;
+        padding-right: 15px;
+    }
+    &-operator {
+        flex: 4;
+        padding-right: 15px;
+    }
+    &-input {
+        flex: 6;
+        padding-right: 15px;
+    }
+    &-btn {
+        flex: 1;
+    }
+}
+.pagination-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-input {
+    width: 45px;
+}
+
+
+
 /*#flash-message {
     position:absolute;
     bottom: 20px;

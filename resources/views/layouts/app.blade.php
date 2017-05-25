@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'HealthIT') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 
     <!-- Scripts -->
@@ -41,14 +42,43 @@
                     </a>
                 </div>
 
+                   
+
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
                     </ul>
+                   <ul class="nav navbar-nav">
+                   
 
+                
+
+                    @if (Auth::check())
+                        @foreach (Auth::user()->role as $role )
+                            @if ($role->name == 'Helpdesk')                           
+                                  @if(Request::path() === ('help/home'))      
+                                <li class="active"> <a href="{{ url('/help/home') }}">Helpdesk Dashboard</a> </li>
+                                @else
+                                <li class=""> <a href="{{ url('/help/home') }}">Helpdesk Dashboard</a> </li>
+                                @endif
+                                
+                            @else                       
+                                @if(Request::path() === 'medic/home')
+                                
+                                <li class="active"> <a href="{{ url('/medic/home') }}">Doctor Dashboard</a> </li>
+                                @else
+                                <li class=""> <a href="{{ url('/medic/home') }}">Doctor Dashboard</a> </li>
+                                @endif
+                            @endif
+                        @endforeach
+                    @else
+                    @endif
+                  
+                       </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
+                    
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
@@ -78,6 +108,7 @@
                 </div>
             </div>
         </nav>
+        
         <div class="container"> 
         @include('partials.flash')
         </div>
@@ -85,10 +116,14 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    
+    
     <script
     src="https://code.jquery.com/jquery-3.2.1.js"
     integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
     crossorigin="anonymous"></script>
     <script>
         $('div.alert').delay(5000).slideUp(300);

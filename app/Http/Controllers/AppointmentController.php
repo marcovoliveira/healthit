@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Appointment;
 use App\User;
 use App\role;
+use Carbon\Carbon;
 use App\Proficiency;
 use Illuminate\Http\Request;
 
@@ -22,9 +23,14 @@ class AppointmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view ('help.appointment');
+    public function index(Request $request)
+    {        
+        $s = $request->input('s');
+
+            $appointments = Appointment::search($s)
+            ->paginate(10);
+            
+            return view ('help.appointment.home', compact('appointments', 's'));
     }
 
     /**
@@ -49,11 +55,12 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
+        $now = Carbon::now();
         $this->validate(request(),  [
             'name' => 'required|string|max:255',
             'sns' => 'required|integer',
             'especialidade' => 'required',
-            'data' => 'required',
+            'data' => 'required|date|after_or_equal:tomorrow',
             'user_id' => 'required|integer',
         ]);
 
@@ -64,12 +71,12 @@ class AppointmentController extends Controller
             'especialidade' => request ('especialidade'),
             'data' => request ('data'),
             'user_id' => request ('user_id'),
-            'realizada' => ('false')
+            'realizada' => (0)
         ]);
 
         session()->flash('message', 'Appointment created successfully!');
         
-        return redirect('/help/home');
+        return redirect('/help/appointment/home');
     }
 
     /**
@@ -78,9 +85,14 @@ class AppointmentController extends Controller
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function show(Appointment $appointment)
+   public function show($id)
     {
-        //
+        $appointment = Appointment::with('user', 'items')->findOrFail($id);
+
+        return response()
+            ->json([
+                'model' => $invoice
+            ]);
     }
 
     /**
@@ -89,9 +101,15 @@ class AppointmentController extends Controller
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Appointment $appointment)
+    public function edit($id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $users = User::whereHas('role', function($q){
+            $q->where('name', 'Doctor');
+            })->get();
+
+        $proficiencies = Proficiency::All();
+        return view ('help.appointment.edit', compact('appointment', 'users', 'proficiencies'));
     }
 
     /**
@@ -101,9 +119,32 @@ class AppointmentController extends Controller
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Appointment $appointment)
+    public function update(Request $request, Appointment $appointment, $id)
     {
-        //
+         $this->validate(request(),  [
+            'name' => 'required|string|max:255',
+            'sns' => 'required|integer',
+            'especialidade' => 'required',
+            'data' => 'required|date|after_or_equal:tomorrow',
+            'user_id' => 'required|integer',
+        ]);
+
+        $appointment = Appointment::findOrFail($id);
+
+
+        if ($appointment->realizada == 0){
+               $appointment->update($request->all());
+
+                session()->flash('message', 'Appointment updated successfully!');
+        
+                return redirect('/help/appointment/home');
+        }
+        else 
+        {
+           session()->flash('message', 'Fuck you successfully!');
+            return redirect('/help/appointment/home');
+        }
+     
     }
 
     /**
@@ -112,8 +153,16 @@ class AppointmentController extends Controller
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Appointment $appointment)
+    public function destroy(Appointment $appointment, $id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $appointment->delete();
+
+         session()->flash('message', 'Appointment deleted successfully!');
+        
+        return redirect('/help/appointment/home');
     }
+
+   
+
 }

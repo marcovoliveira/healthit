@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Set an Appointment</div>
+                <div class="panel-heading">Edit an Appointment</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="/help/home/appointment">
+                    <form class="form-horizontal" role="form" method="POST" action="/help/home/appointment/{{$appointment->id}}">
                         {{ csrf_field() }}
                         <!--Nome-->
                        
@@ -15,11 +15,11 @@
                             <label for="name" class="col-md-4 control-label">Pacient Name</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
+                                <input id="name" type="text" class="form-control" name="name" value="{{$appointment->name}}" required autofocus>
+                                
                                 @if ($errors->has('name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('Pacient Name') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -29,11 +29,11 @@
                             <label for="sns" class="col-md-4 control-label">Social Security Number</label>
 
                             <div class="col-md-6">
-                                <input id="sns" type="number" class="form-control" name="sns" value="{{ old('sns') }}" required>
+                                <input id="sns" type="number" class="form-control" name="sns" value="{{$appointment->sns}}" required>
 
                                 @if ($errors->has('sns'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('sns') }}</strong>
+                                        <strong>{{ $errors->first('Social Security Number') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -42,14 +42,16 @@
                         <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }}">
                             <label for="especialidade" class="col-md-4 control-label">Proficiency</label>
                             <div class="col-md-6">
-                                        <select class="form-control" id="especialidade" name="especialidade">
+                                        <select class="form-control" id="especialidade" name="especialidade" 
+                                        placeholder="{{$appointment->especialidade}}" value="">
+                                            <option>{{$appointment->especialidade}}</option>
                                         @foreach ($proficiencies as $Proficiency)
                                             <option value="{{$Proficiency->name}}"> {{ $Proficiency->name }} </option>
                                         @endforeach
                                         </select>   
                                 @if ($errors->has('especialidade'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('proficiency') }}</strong>
+                                        <strong>{{ $errors->first('Proficiency') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -59,7 +61,10 @@
                             <label for="data" class="col-md-4 control-label">Appointment Date</label>
 
                             <div class="col-md-6">
-                                <input id="data" type="datetime-local" class="form-control" name="data" value="{{ old('data') }}" required>
+                                
+                                
+
+                                <input id="data" type="datetime-local" class="form-control" name="data" value="<?= str_replace(' ', 'T', $appointment->data)?>" required>
 
                                 @if ($errors->has('data'))
                                     <span class="help-block">
@@ -73,15 +78,11 @@
                             <label for="user_id" class="col-md-4 control-label">Doctor</label>
                             <div class="col-md-6">             
                                     <select class="form-control" id="user_id" name="user_id" place>
-                                         @foreach ($users as $user)
-                                            @if ($user->hasRole('Doctor'))
-                                                @php $doctors[] = $user; @endphp                              
-                                            @endif                        
-                                        @endforeach
-                                    @if (empty($doctors))                                
+                                        <option value="{{$appointment->user->id}}">{{$appointment->user->name}}</option>
+                                    @if (empty($users))                                
                                             <option value="" disabled selected>No Doctor Avaiable</option>
                                     @else
-                                        @foreach ($doctors as $user)
+                                        @foreach ($users as $user)
                                                 <option value="{{$user->id}}"> {{$user->name}}</option>
                                         @endforeach        
                                     @endif  
@@ -97,17 +98,17 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Set Appointment
-                                </button>
+                                    Update Appointment
                                 </button>
                                 <a href="/help/appointment/home">
                                 <button type="button" class="btn btn-warning " >
                                 Back
                                     </button>
                                     <a/>
+                                     </form>
                             </div>
                         </div>
-                    </form>
+                   
                 </div>
             </div>
         </div>

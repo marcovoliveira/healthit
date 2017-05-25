@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use App\User;
+use Auth;
 use App\role;
 use Carbon\Carbon;
 use App\Proficiency;
@@ -16,7 +17,6 @@ class AppointmentController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('help');
-        
     }
     /**
      * Display a listing of the resource.
@@ -32,6 +32,7 @@ class AppointmentController extends Controller
             
             return view ('help.appointment.home', compact('appointments', 's'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -89,10 +90,6 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::with('user', 'items')->findOrFail($id);
 
-        return response()
-            ->json([
-                'model' => $invoice
-            ]);
     }
 
     /**
@@ -110,6 +107,14 @@ class AppointmentController extends Controller
 
         $proficiencies = Proficiency::All();
         return view ('help.appointment.edit', compact('appointment', 'users', 'proficiencies'));
+    }
+
+    public function editD($id) 
+    {
+
+        $appointment = Appointment::find($id);
+        return view ('help.appointment.edit', compact('appointment', 'users', 'proficiencies'));
+
     }
 
     /**
@@ -141,12 +146,12 @@ class AppointmentController extends Controller
         }
         else 
         {
-           session()->flash('message', 'Fuck you successfully!');
+           session()->flash('message', 'Impossible to updade an medical consultation alredy performed');
             return redirect('/help/appointment/home');
         }
      
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *

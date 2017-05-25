@@ -46,6 +46,14 @@ Route::post('/help/home/register', 'HelpController@store');
 });*/
 
 
+Route::get('/medic/appointment/home', 'AppointmentDoctorController@index');
+
+/*Editar consulta e apagar */
+
+Route::get('/medic/appointment/edit/{id}', 'AppointmentDoctorController@edit');
+Route::post('medic/home/appointment/{id}', 'AppointmentDoctorController@update');
+
+
 //Route::get('/help/users/home', 'HelpController@listDoctors');
 
 //  Ver especialidades
@@ -65,6 +73,7 @@ Route::get('/help/home/proficiency/delete/{id}', 'ProficiencyController@destroy'
 
 // Ver consultas
 Route::get('/help/appointment/home', 'AppointmentController@index');
+
 
 /*Registar consulta*/
 Route::get('/help/appointment/register', 'AppointmentController@create');

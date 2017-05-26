@@ -102,3 +102,7 @@ Route::post('/help/home/appointment/{id}', 'AppointmentController@update');
 Route::get('/help/home/appointment/delete/{id}', 'AppointmentController@destroy');
 
 
+//Rotas para ajax request no javascript 
+
+Route::get('/findUsersDate', 'HelpController@findUsersDate');
+/*Route::get('/findEspecialidadeDate', 'HelpController@findEspecialidadeDate');*/

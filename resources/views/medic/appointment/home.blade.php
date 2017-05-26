@@ -42,7 +42,14 @@
                                         <td>{{$appointment->data}}</td>
                                         <td>{{$appointment->especialidade}}</td>
                                         <td>{{$appointment->user->name}}</td>
-                                        <td>{{$appointment->realizada}}</td>
+                                         
+                                            @if ($appointment->realizada == 0)
+                                                <td>Em espera</td>
+                                            @else 
+                                                <td>Realizada</td>
+                                            @endif
+                                            
+                                            
                                         @if ($appointment->realizada == 0)
                                         <td>
                                          <a href="edit/{{$appointment->id}}" button type="button" class="btn btn-primary btn-sm" >Perform</button>

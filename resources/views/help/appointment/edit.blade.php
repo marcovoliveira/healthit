@@ -40,7 +40,7 @@
                         </div>                        
                         <!-- especialidade-->
                         <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }}">
-                            <label for="especialidade" class="col-md-4 control-label">Proficiency</label>
+                            <label for="especialidade" class="col-md-4 control-label especialidade">Proficiency</label>
                             <div class="col-md-6">
                                         <select class="form-control" id="especialidade" name="especialidade" 
                                         placeholder="{{$appointment->especialidade}}" value="">
@@ -64,7 +64,7 @@
                                 
                                 
 
-                                <input id="data" type="datetime-local" class="form-control" name="data" value="<?= str_replace(' ', 'T', $appointment->data)?>" required>
+                                <input id="data" type="datetime-local" class="form-control data" name="data" value="<?= str_replace(' ', 'T', $appointment->data)?>" required>
 
                                 @if ($errors->has('data'))
                                     <span class="help-block">
@@ -77,14 +77,10 @@
                         <div class="form-group{{ $errors->has('user_id') ? ' has-error' : '' }}">
                             <label for="user_id" class="col-md-4 control-label">Doctor</label>
                             <div class="col-md-6">             
-                                    <select class="form-control" id="user_id" name="user_id" place>
+                                    <select class="form-control user_id" id="user_id" name="user_id" place>
                                         <option value="{{$appointment->user->id}}">{{$appointment->user->name}}</option>
                                     @if (empty($users))                                
-                                            <option value="" disabled selected>No Doctor Avaiable</option>
-                                    @else
-                                        @foreach ($users as $user)
-                                                <option value="{{$user->id}}"> {{$user->name}}</option>
-                                        @endforeach        
+                                            <option value="" disabled selected>No Doctor Avaiable</option>    
                                     @endif  
                                         </select>   
                                 @if ($errors->has('Doctor'))
@@ -115,3 +111,51 @@
     </div>
 </div>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){ 
+
+        $(document).on('change', '.data', function(){
+        
+
+            var data_id=$(this).val();
+           
+
+           var div=$(this).parents();
+           // console.log(data_id);
+
+            var op=" ";
+        
+            $.ajax({
+                type:'get',
+                url:'{!!URL::to('findUsersDate')!!}',
+                data:{'data': data_id},
+                success: function(data){
+
+                  // console.log('success');
+                //console.log(data);  
+                /*console.log(data[1].name);*/
+
+                    op+='<option value="0" selected disabled>Select a Doctor</option>';
+
+                    for(var i=0; i<data.length; i++){
+                        op+='<option value="'+data[i].id+'">'+data[i].
+                        name+'</option>';
+                    }
+
+                    div.find('.user_id').html(" ");
+                    div.find('.user_id').append(op);
+
+
+
+
+                },
+                error:function(){
+
+                }
+            });
+        });
+    
+    });
+
+</script>

@@ -8,6 +8,9 @@ use App\role;
 use App\Proficiency;
 use Closure;
 use Auth;
+use DateTime;
+
+
 
 class HelpController extends Controller
 {
@@ -129,5 +132,38 @@ class HelpController extends Controller
 
    }
 
+   public function findUsersDate(Request $request){
+
+    $dt  = $request->data;
+    //$createDate = new DateTime($dt);
+    $dtparse =  str_replace('T', ' ', $dt);
+    $date = date('H:i:s', strtotime($dtparse));
+
+    
+        $users=User::select('id', 'name', 'hora_in', 'hora_out')
+        ->where('hora_in', '<=', $date)
+        ->where('hora_out', '>', $date)->get();
+        
+    /*    return response()->json($date);*/
+        return response()->json($users);
+
+
+   }
+
+/*   public function findEspecialidadeDate(Request $request){
+
+    $especialidade  = $request->data;
+    
+        $users=User::select('id', 'name', 'hora_in')
+        ->whereHas('proficiencies', function($q) use($especialidade){
+            $q->where('name', $especialidade);
+        })->get();
+        
+    
+        return response()->json($users);
+
+
+   }
+*/
 
 }

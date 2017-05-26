@@ -53,8 +53,14 @@ Route::get('/medic/appointment/home', 'AppointmentDoctorController@index');
 Route::get('/medic/appointment/edit/{id}', 'AppointmentDoctorController@edit');
 Route::post('medic/home/appointment/{id}', 'AppointmentDoctorController@update');
 
+/*Ver uma consulta */
+
+Route::get('/medic/home/appointment/show/{id}', 'AppointmentDoctorController@show');
+
 
 //Route::get('/help/users/home', 'HelpController@listDoctors');
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 //  Ver especialidades
 Route::get('/help/proficiency/home', 'ProficiencyController@index');
@@ -68,6 +74,13 @@ Route::post('/help/home/proficiency', 'ProficiencyController@store');
 Route::get('/help/proficiency/edit/{id}', 'ProficiencyController@edit');
 Route::post('/help/home/proficiency/{id}', 'ProficiencyController@update');
 Route::get('/help/home/proficiency/delete/{id}', 'ProficiencyController@destroy');
+
+/*Atribuitr Especialidade */
+
+Route::get('help/proficiency/attach', 'ProficiencyController@showAttach');
+Route::post('help/home/proficiency/attach', 'ProficiencyController@attach');
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 
 

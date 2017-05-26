@@ -27,7 +27,7 @@ class AppointmentController extends Controller
     {        
         $s = $request->input('s');
 
-            $appointments = Appointment::search($s)
+            $appointments = Appointment::search($s)->orderByDesc('data')
             ->paginate(10);
             
             return view ('help.appointment.home', compact('appointments', 's'));
@@ -42,7 +42,9 @@ class AppointmentController extends Controller
     public function create()
     {
         
-        $users = User::all();
+        $users = User::with(['role' => function($q){
+            $q->where('name', 'Doctor');
+            }])->get();
         $proficiencies = Proficiency::all();
 
         return view ('help.appointment.register', compact('users', 'proficiencies'));

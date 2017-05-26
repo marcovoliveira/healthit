@@ -11,6 +11,10 @@
                          <div class="panel-body">
                             <div class="col-md-15 text-right">    
                                 <form class="form-inline my-2 my-lg-0" >
+                                <a href="{{ url('/help/proficiency/attach') }}" button type="button" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                    Attach Proficiency to a Doctor
+                                    </button></a>  
                                 <a href="{{ url('/help/proficiency/register') }}" button type="button" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                                     Create a Proficiency

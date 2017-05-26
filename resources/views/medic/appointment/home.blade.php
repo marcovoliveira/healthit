@@ -11,10 +11,6 @@
                          <div class="panel-body">
                             <div class="col-md-15 text-right">    
                                 <form class="form-inline my-2 my-lg-0" >
-                                <a href="{{ url('/help/appointment/register') }}" button type="button" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-                                    Perform an apointment
-                                    </button></a>   
                                     <form  method="get">
                                     <input class="form-control mr-sm-2" type="text" placeholder="Search" name="s"
                                     values=" {{ isset($s) ? $s : '' }} ">
@@ -49,16 +45,16 @@
                                         <td>{{$appointment->realizada}}</td>
                                         @if ($appointment->realizada == 0)
                                         <td>
-                                         <a href="edit/{{$appointment->id}}" button type="button" class="btn btn-primary btn-sm" >Edit</button>
+                                         <a href="edit/{{$appointment->id}}" button type="button" class="btn btn-primary btn-sm" >Perform</button>
                                         </td>
                                          <td>
-                                        <a href="/medic/home/appointment/delete/{{$appointment->id}}" button type="button" class="btn btn-danger btn-sm" >Delete</button>
+                                        <a href="/medic/home/appointment/show/{{$appointment->id}}" button type="button" class="btn btn-success btn-sm" >View</button>
                                         </td>
                                         @elseif ($appointment->realizada == 1)
-                                        <td><a button type="button" class="btn btn-primary btn-sm" disabled>Edit</button>
+                                        <td><a button type="button" class="btn btn-primary btn-sm" disabled>Perform</button>
                                         </td>
                                         <td>
-                                        <a button type="button" class="btn btn-danger btn-sm" disabled>Delete</button>
+                                        <a href="/medic/home/appointment/show/{{$appointment->id}}" button type="button" class="btn btn-success btn-sm" >View</button>
                                         </td>
                                         @endif
                                        

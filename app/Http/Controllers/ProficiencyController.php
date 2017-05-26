@@ -36,17 +36,17 @@ class ProficiencyController extends Controller
 
         public function store (Request $request)
         {
-             $this->validate(request(),  [
-            'name' => 'required|string|max:50|unique:proficiencies',
-        ]);
+                $this->validate(request(),  [
+                'name' => 'required|string|max:50|unique:proficiencies',
+            ]);
 
-        $proficiency = Proficiency::create([
-            'name' => request('name'),
-        ]);
+            $proficiency = Proficiency::create([
+                'name' => request('name'),
+            ]);
 
-        session()->flash('message', 'Proficiency created successfully!');
-        
-        return redirect('/help/proficiency/home');
+            session()->flash('message', 'Proficiency created successfully!');
+            
+            return redirect('/help/proficiency/home');
 
         }
 
@@ -54,17 +54,14 @@ class ProficiencyController extends Controller
         {
             $proficiency = Proficiency::findOrFail($id);
 
-            return response()
-            ->json([
-                'model' => $proficiency
-            ]);
+            
         }
 
         public function edit ($id)
         {
             $proficiency = Proficiency::find($id);
 
-        return view ('help.proficiency.edit', compact('proficiency'));
+            return view ('help.proficiency.edit', compact('proficiency'));
         }
 
         public function update (Request $request, $id)
@@ -79,6 +76,35 @@ class ProficiencyController extends Controller
         session()->flash('message', 'Proficiency updated successfully!');
         
         return redirect('/help/proficiency/home');
+
+        }
+
+        public function showAttach() 
+        {
+            $proficiencies = Proficiency::All();
+            $users = User::with(['role' => function($q){
+            $q->where('name', 'Doctor');
+            }])->get();
+            /*$user = User::all();
+            $users = $user->where('role', 'Doctor');*/
+
+            return view ('help.proficiency.attach', compact('proficiencies', 'users'));
+
+        }
+
+
+        public function Attach(Request $request, User $user) 
+        {
+
+            $appointment = Appointment::findOrFail($user->id);
+            dd($appointment);
+
+             $prof = request ('proficiency');
+
+       
+             $user->proficiencies()->attach(Proficiency::where('id', $value)->first());
+        
+
         }
 
         public function destroy($id)

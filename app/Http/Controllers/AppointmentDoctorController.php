@@ -26,7 +26,7 @@ class AppointmentDoctorController extends Controller
     {        
         $s = $request->input('s');
 
-            $appointments = Appointment::search($s)->where('user_id', '=', Auth::id())
+            $appointments = Appointment::search($s)->orderByDesc('data')->where('user_id', '=', Auth::id())
             ->paginate(10);
             
            return view ('medic.appointment.home', compact('appointments', 's'));
@@ -41,8 +41,11 @@ class AppointmentDoctorController extends Controller
      */
    public function show($id)
     {
-        $appointment = Appointment::with('user', 'items')->findOrFail($id);
 
+
+        $appointment = Appointment::find($id);
+
+        return view ('medic.appointment.show', compact('appointment'));
        
     }
 
@@ -76,7 +79,7 @@ class AppointmentDoctorController extends Controller
                        
             $appointment->sintomas = request('sintomas');
             $appointment->diagnostico = request('diagnostico');
-            $appointment->realizada = 1 ;
+            $appointment->realizada = 1 ;   
 
              $appointment->save();
 

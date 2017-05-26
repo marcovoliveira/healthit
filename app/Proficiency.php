@@ -24,7 +24,13 @@ class Proficiency extends Model
     ];
 
 
-    public function user() {
+    
+
+
+
+    public function user() 
+    
+    {
     return $this->belongsToMany('App\User');  //, 'proficiency_user', 'user_id', 'proficiency_id');
     }
 

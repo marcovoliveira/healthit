@@ -93,16 +93,28 @@ class ProficiencyController extends Controller
         }
 
 
-        public function Attach(Request $request, User $user) 
+        public function attach(Request $request) 
         {
+             
+            $user_id = $request->input('user_id');
+            $prof_id = $request->input('prof_id');      
 
-            $appointment = Appointment::findOrFail($user->id);
-            dd($appointment);
+            $user = User::findOrFail($user_id);
 
-             $prof = request ('proficiency');
+            $user->proficiencies()->syncWithoutDetaching(Proficiency::where('id', $prof_id)->first());
 
-       
-             $user->proficiencies()->attach(Proficiency::where('id', $value)->first());
+
+            /*if($user->proficiencies()->contains(Proficiency::where('id', $prof_id)->first())) {
+                 $user->proficiencies()->attach(Proficiency::where('id', $prof_id)->first());
+                 session()->flash('message', 'Proficiency attached successfully!');
+                return redirect('/help/proficiency/home');
+            }
+*/              session()->flash('message', 'Proficiency attached successfully!');
+                return redirect('/help/proficiency/home');
+               
+
+             
+
         
 
         }

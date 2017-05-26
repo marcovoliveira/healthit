@@ -7,21 +7,21 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Attach a Proficiency</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="/help/home/appointment">
+                    <form class="form-horizontal" role="form" method="POST" action="/help/home/proficiencyattach">
                         {{ csrf_field() }}                    
-                        <!-- especialidade-->
-                        <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }}">
-                            <label for="especialidade" class="col-md-4 control-label">Proficiency</label>
+                        <!-- prof_id-->
+                        <div class="form-group{{ $errors->has('prof_id') ? ' has-error' : '' }}">
+                            <label for="prof_id" class="col-md-4 control-label">Proficiency</label>
                             <div class="col-md-6">
-                                        <select class="form-control" id="especialidade" name="especialidade">
+                                        <select class="form-control" id="prof_id" name="prof_id">
                                         @foreach ($proficiencies as $Proficiency)
-                                            <option value="{{$Proficiency->name}}"> {{ $Proficiency->name }} </option>
+                                            <option value="{{$Proficiency->id}}"> {{ $Proficiency->name }} </option>
                                         @endforeach
                                         </select>   
-                                @if ($errors->has('especialidade'))
+                                @if ($errors->has('prof_id'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('proficiency') }}</strong>
-                                    </span>
+                                        <strong>{{ $errors->first('prof_id') }}</strong>
+                                    </span> 
                                 @endif
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                     Attach
                                 </button>
                                 </button>
-                                <a href="/help/appointment/home">
+                                <a href="/help/proficiency/home">
                                 <button type="button" class="btn btn-warning " >
                                 Back
                                     </button>

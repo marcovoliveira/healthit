@@ -24,6 +24,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Proficiency'); //, 'proficiency_user', 'user_id', 'proficiency_id');
     }
 
+
+
+
     public function hasAnyRole($roles){
         if (is_array($roles)) {
             foreach ($roles as $role){

@@ -77,8 +77,8 @@ Route::get('/help/home/proficiency/delete/{id}', 'ProficiencyController@destroy'
 
 /*Atribuitr Especialidade */
 
-Route::get('help/proficiency/attach', 'ProficiencyController@showAttach');
-Route::post('help/home/proficiency/attach', 'ProficiencyController@attach');
+Route::get('/help/proficiency/attach', 'ProficiencyController@showAttach');
+Route::post('/help/home/proficiencyattach', 'ProficiencyController@attach');
 
 /////////////////////////////////////////////////////////////////////////////////////
 

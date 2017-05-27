@@ -167,10 +167,6 @@ class HelpController extends Controller
         ->whereHas('proficiencies', function($q) use($e){
             $q->where('name', $e);
         })
-        ->whereHas('appointment', function($w) use($dtend, $dtstart){
-            $w->whereNotBetween('data', array($dtstart, $dtend)); // ->where('data', '=', $dtend);       //  where('data', '', $dtstart)
-            // esta query na parte dos appointments não esta a funcionar!
-        })
         ->where('hora_in', '<=', $date)
         ->where('hora_out', '>', $date)->get();
 

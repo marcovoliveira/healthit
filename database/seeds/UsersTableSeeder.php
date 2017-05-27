@@ -28,21 +28,9 @@ class UsersTableSeeder extends Seeder
              'name' => 'Helpdesk',
         ]);
         
-        $user =  User::create([
-            'name' => 'Admin',
-            'seg_social' => rand(10000000, 99999999),
-            'email' => 'admin@healthit.com',
-            'password' => bcrypt('secret'),
-            ]);   
-            $user->role()->attach(Role::where('name', 'Helpdesk')->first());
+        
 
-        $user =  User::create([
-            'name' => 'Doctor',
-            'seg_social' => rand(10000000, 99999999),
-            'email' => 'doctor@healthit.com',
-            'password' => bcrypt('secret'),
-            ]);   
-            $user->role()->attach(Role::where('name', 'Doctor')->first());
+        
 
     for ($i=0; $i < 10; $i++) { 
        $user =  User::create([
@@ -71,6 +59,13 @@ class UsersTableSeeder extends Seeder
             $user->proficiencies()->attach(Proficiency::where('name', 'Infectology')->first());
             }
            } 
+        $user =  User::create([
+            'name' => 'Doctor',
+            'seg_social' => rand(10000000, 99999999),
+            'email' => 'doctor@healthit.com',
+            'password' => bcrypt('secret'),
+            ]);   
+            $user->role()->attach(Role::where('name', 'Doctor')->first());
             
             
 
@@ -89,6 +84,13 @@ class UsersTableSeeder extends Seeder
 
         
     }
+        $user =  User::create([
+            'name' => 'Admin',
+            'seg_social' => rand(10000000, 99999999),
+            'email' => 'admin@healthit.com',
+            'password' => bcrypt('secret'),
+            ]);   
+            $user->role()->attach(Role::where('name', 'Helpdesk')->first());
        
 
 /*        DB::table('users')->insert([

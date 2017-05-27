@@ -106,22 +106,28 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){ 
-
-        $(document).on('change', '.data', function(){
-        
-
+       
+        $(document).on('change', '.data, .especialidade',   function(){
+            
+            var especialidade = document.getElementById("especialidade");
+            
+            
             var data_id=$(this).val();
-           
+            
+            
+            var e = especialidade.options[especialidade.selectedIndex].value;
+        
+ 
 
            var div=$(this).parents();
-           // console.log(data_id);
+           
 
             var op=" ";
         
             $.ajax({
                 type:'get',
                 url:'{!!URL::to('findUsersDate')!!}',
-                data:{'data': data_id},
+                data:{'data': data_id, e},
                 success: function(data){
 
                   // console.log('success');
@@ -146,6 +152,7 @@
 
                 }
             });
+    
         });
     
     });

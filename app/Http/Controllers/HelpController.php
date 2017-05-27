@@ -9,6 +9,7 @@ use App\Proficiency;
 use Closure;
 use Auth;
 use DateTime;
+use Carbon\Carbon;
 
 
 
@@ -135,16 +136,45 @@ class HelpController extends Controller
    public function findUsersDate(Request $request){
 
     $dt  = $request->data;
+    $e = $request->e;
+    
     //$createDate = new DateTime($dt);
     $dtparse =  str_replace('T', ' ', $dt);
     $date = date('H:i:s', strtotime($dtparse));
+    
+    $dtcarbon = Carbon::parse($dt);
+
 
     
+
+
+
+    $parsetry =  str_replace('T', ' ', $dt);
+    $try2 = strtotime($parsetry);
+    $try = $try2 - (15 * 100);
+    $dtstart = date("Y-m-d H:i:s", $try);
+    $try4 = $try2 + (15 * 100);
+    $dtend = date("Y-m-d H:i:s", $try4);
+
+
+
+
+
+            // Consulta começa as 19H-----19:30H
+            // Marcar 18H30 ou para as 19:30H 
+            // logo so posso marcar para 
         $users=User::select('id', 'name', 'hora_in', 'hora_out')
+        ->whereHas('proficiencies', function($q) use($e){
+            $q->where('name', $e);
+        })
+        ->whereHas('appointment', function($w) use($dtend, $dtstart){
+            $w->whereNotBetween('data', array($dtstart, $dtend)); // ->where('data', '=', $dtend);       //  where('data', '', $dtstart)
+            // esta query na parte dos appointments não esta a funcionar!
+        })
         ->where('hora_in', '<=', $date)
         ->where('hora_out', '>', $date)->get();
-        
-    /*    return response()->json($date);*/
+
+
         return response()->json($users);
 
 

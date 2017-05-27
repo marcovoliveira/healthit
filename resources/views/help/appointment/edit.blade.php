@@ -42,7 +42,7 @@
                         <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }}">
                             <label for="especialidade" class="col-md-4 control-label especialidade">Proficiency</label>
                             <div class="col-md-6">
-                                        <select class="form-control" id="especialidade" name="especialidade" 
+                                        <select class="form-control especialidade" id="especialidade" name="especialidade" 
                                         placeholder="{{$appointment->especialidade}}" value="">
                                             <option>{{$appointment->especialidade}}</option>
                                         @foreach ($proficiencies as $Proficiency)
@@ -114,22 +114,28 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){ 
-
-        $(document).on('change', '.data', function(){
-        
-
+       
+        $(document).on('change', '.data, .especialidade',   function(){
+            
+            var especialidade = document.getElementById("especialidade");
+            
+            
             var data_id=$(this).val();
-           
+            
+            
+            var e = especialidade.options[especialidade.selectedIndex].value;
+        
+ 
 
            var div=$(this).parents();
-           // console.log(data_id);
+           
 
             var op=" ";
         
             $.ajax({
                 type:'get',
                 url:'{!!URL::to('findUsersDate')!!}',
-                data:{'data': data_id},
+                data:{'data': data_id, e},
                 success: function(data){
 
                   // console.log('success');
@@ -154,6 +160,7 @@
 
                 }
             });
+    
         });
     
     });

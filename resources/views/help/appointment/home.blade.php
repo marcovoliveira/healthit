@@ -23,7 +23,8 @@
                                     </form>        
                                </div>  
                                 <p>
-                            <table class="table table-striped" id="myTable" >
+                            <div style="overflow-x:auto;">
+                            <table class="table table-striped table-responsive" id="myTable" >
                                     <thead>
                                         <tr>
                                         <th>#</th>
@@ -77,6 +78,7 @@
                                     </tbody>
                                      
                             </table>
+                            </div>
                             {{ $appointments->appends(['s' => $s])->links() }}
                         </div>
                     </div>

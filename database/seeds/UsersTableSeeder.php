@@ -27,6 +27,22 @@ class UsersTableSeeder extends Seeder
         DB::table('roles')->insert([
              'name' => 'Helpdesk',
         ]);
+        
+        $user =  User::create([
+            'name' => 'Admin',
+            'seg_social' => rand(10000000, 99999999),
+            'email' => 'admin@healthit.com',
+            'password' => bcrypt('secret'),
+            ]);   
+            $user->role()->attach(Role::where('name', 'Helpdesk')->first());
+
+        $user =  User::create([
+            'name' => 'Doctor',
+            'seg_social' => rand(10000000, 99999999),
+            'email' => 'doctor@healthit.com',
+            'password' => bcrypt('secret'),
+            ]);   
+            $user->role()->attach(Role::where('name', 'Doctor')->first());
 
     for ($i=0; $i < 10; $i++) { 
        $user =  User::create([

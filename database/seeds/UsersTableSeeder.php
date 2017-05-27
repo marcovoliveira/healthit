@@ -46,7 +46,7 @@ class UsersTableSeeder extends Seeder
             $user->proficiencies()->attach(Proficiency::where('name', 'Dermatology')->first());
             }
             if ($vala === 2) {
-            $user->proficiencibes()->attach(Proficiency::where('name', 'Pediatric')->first());
+            $user->proficiencies()->attach(Proficiency::where('name', 'Pediatric')->first());
             }
             if ($vala === 3) {
             $user->proficiencies()->attach(Proficiency::where('name', 'Cardiology')->first());

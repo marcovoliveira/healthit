@@ -58,8 +58,10 @@ class UsersTableSeeder extends Seeder
             if ($vala === 4) {
             $user->proficiencies()->attach(Proficiency::where('name', 'Infectology')->first());
             }
-           } 
-        $user =  User::create([
+           }          
+    }
+        
+            $user =  User::create([
             'name' => 'Doctor',
             'seg_social' => rand(10000000, 99999999),
             'email' => 'doctor@healthit.com',
@@ -67,11 +69,6 @@ class UsersTableSeeder extends Seeder
             ]);   
             $user->role()->attach(Role::where('name', 'Doctor')->first());
             
-            
-
-
-         
-    }
 
     for ($i=0; $i < 10; $i++) { 
         $user = User::create([

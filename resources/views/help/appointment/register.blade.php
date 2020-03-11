@@ -91,9 +91,9 @@
                                 </button>
                                 <a href="/help/appointment/home">
                                 <button type="button" class="btn btn-warning " >
-                                Back
-                                    </button>
-                                    <a/>
+                                    Back
+                                </button>
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -109,49 +109,35 @@
        
         $(document).on('change', '.data, .especialidade',   function(){
             
-            var especialidade = document.getElementById("especialidade");
+            let proficiencyInput = document.getElementById("especialidade");
+            let date = document.getElementById("data").value
             
-            
-            var data_id=$(this).val();
-            
-            
-            var e = especialidade.options[especialidade.selectedIndex].value;
-        
- 
+            let proficiency = proficiencyInput.options[proficiencyInput.selectedIndex].value;
 
-           var div=$(this).parents();
-           
+            if(date){
+                let div = $(this).parents();
+                $.ajax({
+                    type:'get',
+                    url:'{!!URL::to('findUsersDate')!!}',
+                    data:{'data': date, proficiency},
+                    success: function(data){
 
-            var op=" ";
-        
-            $.ajax({
-                type:'get',
-                url:'{!!URL::to('findUsersDate')!!}',
-                data:{'data': data_id, e},
-                success: function(data){
+                        let op ='<option value="0" selected disabled>Select a Doctor</option>';
 
-                  // console.log('success');
-                //console.log(data);  
-                /*console.log(data[1].name);*/
+                        for(var i=0; i<data.length; i++){
+                            op+='<option value="'+data[i].id+'">'+data[i].
+                            name+'</option>';
+                        }
 
-                    op+='<option value="0" selected disabled>Select a Doctor</option>';
+                        div.find('.user_id').html(" ");
+                        div.find('.user_id').append(op);
+                    },
+                    error:function(){
 
-                    for(var i=0; i<data.length; i++){
-                        op+='<option value="'+data[i].id+'">'+data[i].
-                        name+'</option>';
                     }
-
-                    div.find('.user_id').html(" ");
-                    div.find('.user_id').append(op);
-
-
-
-
-                },
-                error:function(){
-
-                }
-            });
+                });
+            }
+            
     
         });
     

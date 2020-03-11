@@ -8,16 +8,17 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.6.4",
+        "php": ">=7.2.5",
         "barryvdh/laravel-ide-helper": "^2.3",
         "laravel/dusk": "^5.0.0",
-        "laravel/framework": "6.0.*",
-        "laravel/tinker": "~1.0"
+        "laravel/framework": "7.0.*",
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.7",
+        "phpunit/phpunit": "^8.5",
         "filp/whoops": "~2.0"
     },
     "autoload": {

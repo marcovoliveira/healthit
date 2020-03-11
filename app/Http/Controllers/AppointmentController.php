@@ -45,8 +45,11 @@ class AppointmentController extends Controller
         $users = User::with(['role' => function($q){
             $q->where('name', 'Doctor');
             }])->get();
+        
+        $doctors = User::has('role', 1)
+        ->orderBy('name', 'desc')->get();
         $proficiencies = Proficiency::all();
-
+        
         return view ('help.appointment.register', compact('users', 'proficiencies'));
     }
 

@@ -23,22 +23,11 @@ class Proficiency extends Model
 
     ];
 
-
-    
-
-
-
-    public function user() 
-    
-    {
-    return $this->belongsToMany('App\User');  //, 'proficiency_user', 'user_id', 'proficiency_id');
+    public function user() {
+        return $this->belongsToMany('App\User');  //, 'proficiency_user', 'user_id', 'proficiency_id');
     }
 
-     public function scopeSearch($query, $s){
-        $query->where('name', 'like', '%' .$s. '%')
-                    ->orWhere('id', 'like', '%' .$s. '%');
-
+    public function scopeSearch($query, $s){
+        $query->where('name', 'like', '%' .$s. '%')->orWhere('id', 'like', '%' .$s. '%');
     }
-
-
 }

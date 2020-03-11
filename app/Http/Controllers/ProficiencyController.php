@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\proficiency;
+use App\Proficiency;
 use App\User;
 use App\role;
 use Illuminate\Http\Request;

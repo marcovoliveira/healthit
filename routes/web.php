@@ -11,10 +11,10 @@
 |
 */
 
+/** Welcome page */
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 /*Route::group(['prefix' => 'api/'], function() {
     Route::resource('proficiency', 'ProficiencyController');
@@ -23,86 +23,65 @@ Route::get('/', function () {
 
 });*/
 
-
-
-
 Auth::routes();
 
-/*Paginas inicias helpdesk e medico*/
+/* Incial page helpdesk and doctor*/
 Route::get('/medic/home', 'HomeController@index')->name('home');
 Route::get('/help/home', 'HelpController@index')->name('help');
-
 Route::get('/help/users/edit', 'HelpController@edit');
 
-/*Registar Medico*/
+/** Register a new doctor */
 Route::get('/help/register', 'HelpController@register');
 Route::post('/help/home/register', 'HelpController@store');
 
-
-
-/*ver dados*/
+/** Show data */
 /*Route::get('/help/appointment/home', function () {
     return view('help.appointment.home');
 });*/
 
-
+/** Appointments home */
 Route::get('/medic/appointment/home', 'AppointmentDoctorController@index');
 
-/*Editar consulta e apagar */
-
+/** Edit and delete appointment */
 Route::get('/medic/appointment/edit/{id}', 'AppointmentDoctorController@edit');
 Route::post('medic/home/appointment/{id}', 'AppointmentDoctorController@update');
 
-/*Ver uma consulta */
-
+/** List appointments */
 Route::get('/medic/home/appointment/show/{id}', 'AppointmentDoctorController@show');
-
-
 //Route::get('/help/users/home', 'HelpController@listDoctors');
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-//  Ver especialidades
+/** List proficiencies */
 Route::get('/help/proficiency/home', 'ProficiencyController@index');
 
-/*Registar especialidades*/
+/** Register proficiency */
 Route::get('/help/proficiency/register', 'ProficiencyController@create');
 Route::post('/help/home/proficiency', 'ProficiencyController@store');
 
-/*Editar especialidades e apagar */
-
+/** Edit and delete proficiency */
 Route::get('/help/proficiency/edit/{id}', 'ProficiencyController@edit');
 Route::post('/help/home/proficiency/{id}', 'ProficiencyController@update');
 Route::get('/help/home/proficiency/delete/{id}', 'ProficiencyController@destroy');
 
-/*Atribuitr Especialidade */
-
+/** Attach proficiency */
 Route::get('/help/proficiency/attach', 'ProficiencyController@showAttach');
 Route::post('/help/home/proficiencyattach', 'ProficiencyController@attach');
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-
-
-// Ver consultas
+/** List appointments */
 Route::get('/help/appointment/home', 'AppointmentController@index');
 
-
-/*Registar consulta*/
+/** Register appointment */
 Route::get('/help/appointment/register', 'AppointmentController@create');
 Route::post('/help/home/appointment', 'AppointmentController@store');
 
-/*Editar consulta e apagar */
-
+/** Edit and delete appointment */
 Route::get('/help/appointment/edit/{id}', 'AppointmentController@edit');
-
 Route::post('/help/home/appointment/{id}', 'AppointmentController@update');
-
-
 Route::get('/help/home/appointment/delete/{id}', 'AppointmentController@destroy');
 
-
-//Rotas para ajax request no javascript 
-
+/** Helper to find users date */
 Route::get('/findUsersDate', 'HelpController@findUsersDate');
 /*Route::get('/findEspecialidadeDate', 'HelpController@findEspecialidadeDate');*/

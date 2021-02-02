@@ -11,7 +11,7 @@
         "php": ">=7.2.5",
         "barryvdh/laravel-ide-helper": "^2.3",
         "laravel/dusk": "^5.0.0",
-        "laravel/framework": "7.0.*",
+        "laravel/framework": "7.30.*",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0"
     },
